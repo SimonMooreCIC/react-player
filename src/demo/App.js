@@ -126,6 +126,32 @@ class App extends Component {
   ref = player => {
     this.player = player
   }
+  onChooseFile = e => {
+  	const url = URL.createObjectURL(e.target.files[0])
+    this.setState({ url })
+    console.log("Upload", url);
+  }
+  onUseFile = () => {
+    const blob = new Blob(["../videos/case.mp4"], {"type" : "video\/mp4"});
+    const url = URL.createObjectURL(blob);
+    console.log(url);
+    this.setState({ url })
+
+    // const file = new Blob(
+    //     ["../videos/case.mp4"],
+    //     {"type" : "video\/mp4"});
+    // const url = URL.createObjectURL(file);
+
+    // console.log(url);
+    // this.setState({ url })
+
+    // const link = '../videos/case.mp4';
+    // const binaryData = [];
+    // binaryData.push(link);
+    // const url = window.URL.createObjectURL(new Blob(binaryData, {type: "video/mp4"}));
+    // console.log(url);
+    // this.setState({ url })
+  }
   render () {
     const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
     const SEPARATOR = ' · '
@@ -315,7 +341,7 @@ class App extends Component {
             <tr>
               <th>Files</th>
               <td>
-                {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4', 'mp4')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/case.mp4', 'mp4')}
                 {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.ogv', 'ogv')}
                 {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm', 'webm')}
                 {this.renderLoadButton('https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3', 'mp3')}
@@ -328,7 +354,7 @@ class App extends Component {
               <th>Custom URL</th>
               <td>
                 <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
-                <button onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
+                <button type="text  " onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
               </td>
             </tr>
           </tbody></table>
@@ -372,6 +398,21 @@ class App extends Component {
             </tr>
           </tbody></table>
         </section>
+        <div>
+        <input onChange={this.onChooseFile} type='file' />
+        <button onClick={this.onUseFile}>Test</button>
+        <ReactPlayer
+          url={this.state.url}
+          className='react-player'
+          playing
+          controls
+          width='320px'
+          height='180px'
+          onPlay={this.onPlay}
+          onReady={() => console.log('onReady')}
+          onStart={() => console.log('onStart')}
+        />
+      </div>
         <footer className='footer'>
           Version <strong>{version}</strong>
           {SEPARATOR}

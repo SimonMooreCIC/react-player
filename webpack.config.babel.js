@@ -37,6 +37,14 @@ export default {
         include: [ PATH_SRC, PATH_TESTS ]
       },
       {
+        test: /\.html$/,
+        loader: 'html-loader?attrs[]=url'
+      },
+      {
+        test: /\.mp4$/,
+        loader: 'url?limit=10000&mimetype=video/mp4'
+      },
+      {
         test: /\.css$/,
         use: styleLoader([
           'style-loader',
