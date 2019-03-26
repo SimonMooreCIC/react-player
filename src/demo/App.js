@@ -120,32 +120,7 @@ class App extends Component {
   ref = player => {
     this.player = player
   }
-  // onChooseFile = e => {
-  // 	const url = URL.createObjectURL(e.target.files[0])
-  //   this.setState({ url })
-  //   console.log("Upload", url);
-  // }
-  onUseFile = () => {
-    const blob = new Blob(["../videos/case.mp4"], {"type" : "video\/mp4"});
-    const url = URL.createObjectURL(blob);
-    console.log(url);
-    this.setState({ url })
-
-    // const file = new Blob(
-    //     ["../videos/case.mp4"],
-    //     {"type" : "video\/mp4"});
-    // const url = URL.createObjectURL(file);
-
-    // console.log(url);
-    // this.setState({ url })
-
-    // const link = '../videos/case.mp4';
-    // const binaryData = [];
-    // binaryData.push(link);
-    // const url = window.URL.createObjectURL(new Blob(binaryData, {type: "video/mp4"}));
-    // console.log(url);
-    // this.setState({ url })
-  }
+  
   render () {
     const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
     const SEPARATOR = ' · '
@@ -284,7 +259,6 @@ class App extends Component {
               <th>Audio Files</th>
               <td>
                 {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.m4a', 'm4a')}
-                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.mpga', 'mpga')}
                 {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/the-wires.mp3', 'mp3')}
                 {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.wav', 'wav')}
                 {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.aac', 'aac')}
@@ -337,13 +311,6 @@ class App extends Component {
         <div>
         {/* <input onChange={this.onChooseFile} type='file' /> */}
       </div>
-        <footer className='footer'>
-          Version <strong>{version}</strong>
-          {SEPARATOR}
-          <a href='https://github.com/CookPete/react-player'>GitHub</a>
-          {SEPARATOR}
-          <a href='https://www.npmjs.com/package/react-player'>npm</a>
-        </footer>
       </div>
     )
   }

@@ -2,6 +2,8 @@ import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import config, { plugins } from './webpack.config.babel'
 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 export const minifyPlugins = [
   new webpack.DefinePlugin({
     'process.env': {
@@ -31,4 +33,14 @@ export default {
     ...minifyPlugins,
     new ExtractTextPlugin({ filename: 'app.css' })
   ]
+  // optimization: {
+  //   minimizer: [
+  //     new UglifyJsPlugin({
+  //       sourceMap: true,
+  //       compress: {
+  //         warnings: false,
+  //       },
+  //     }),
+  //   ],
+  // }
 }

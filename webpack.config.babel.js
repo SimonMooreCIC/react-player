@@ -48,8 +48,7 @@ export default {
         test: /\.css$/,
         use: styleLoader([
           'style-loader',
-          'css-loader?sourceMap',
-          'postcss-loader?sourceMap'
+          'css-loader?sourceMap'
         ]),
         include: PATH_SRC
       }
