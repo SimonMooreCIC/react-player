@@ -6,12 +6,6 @@ import createSinglePlayer from '../singlePlayer'
 const IOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
 const AUDIO_EXTENSIONS = /\.(m4a|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i
 const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v|wmv)($|\?)/i
-const HLS_EXTENSIONS = /\.(m3u8)($|\?)/i
-const HLS_SDK_URL = 'https://cdnjs.cloudflare.com/ajax/libs/hls.js/VERSION/hls.min.js'
-const HLS_GLOBAL = 'Hls'
-const DASH_EXTENSIONS = /\.(mpd)($|\?)/i
-const DASH_SDK_URL = 'https://cdnjs.cloudflare.com/ajax/libs/dashjs/VERSION/dash.all.min.js'
-const DASH_GLOBAL = 'dashjs'
 const MATCH_DROPBOX_URL = /www\.dropbox\.com\/.+/
 
 function canPlay (url) {
@@ -31,9 +25,7 @@ function canPlay (url) {
   }
   return (
     AUDIO_EXTENSIONS.test(url) ||
-    VIDEO_EXTENSIONS.test(url) ||
-    HLS_EXTENSIONS.test(url) ||
-    DASH_EXTENSIONS.test(url)
+    VIDEO_EXTENSIONS.test(url)
   )
 }
 
@@ -111,31 +103,7 @@ export class FilePlayer extends Component {
     }
     return AUDIO_EXTENSIONS.test(props.url) || props.config.file.forceAudio
   }
-  shouldUseHLS (url) {
-    return (HLS_EXTENSIONS.test(url) && !IOS) || this.props.config.file.forceHLS
-  }
-  shouldUseDASH (url) {
-    return DASH_EXTENSIONS.test(url) || this.props.config.file.forceDASH
-  }
   load (url) {
-    const { hlsVersion, dashVersion } = this.props.config.file
-    if (this.shouldUseHLS(url)) {
-      getSDK(HLS_SDK_URL.replace('VERSION', hlsVersion), HLS_GLOBAL).then(Hls => {
-        this.hls = new Hls(this.props.config.file.hlsOptions)
-        this.hls.on(Hls.Events.ERROR, (e, data) => {
-          this.props.onError(e, data, this.hls, Hls)
-        })
-        this.hls.loadSource(url)
-        this.hls.attachMedia(this.player)
-      })
-    }
-    if (this.shouldUseDASH(url)) {
-      getSDK(DASH_SDK_URL.replace('VERSION', dashVersion), DASH_GLOBAL).then(dashjs => {
-        this.dash = dashjs.MediaPlayer().create()
-        this.dash.initialize(this.player, url, this.props.playing)
-        this.dash.getDebug().setLogToBrowserConsole(false)
-      })
-    }
 
     if (url instanceof Array) {
       // When setting new urls (<source>) on an already loaded video,
@@ -222,9 +190,7 @@ export class FilePlayer extends Component {
     return end
   }
   getSource (url) {
-    const useHLS = this.shouldUseHLS(url)
-    const useDASH = this.shouldUseDASH(url)
-    if (url instanceof Array || isMediaStream(url) || useHLS || useDASH) {
+    if (url instanceof Array || isMediaStream(url)) {
       return undefined
     }
     if (MATCH_DROPBOX_URL.test(url)) {

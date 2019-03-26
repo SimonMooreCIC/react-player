@@ -253,7 +253,7 @@ class App extends Component {
               </td>
             </tr>
             <tr>
-              <td colspan="2">Supported Formats - (mp4, mov, ogv, webm, m4v)</td>
+              <td colSpan="2">Supported Formats - (mp4, mov, ogv, webm, m4v)</td>
             </tr>
             <tr>
               <th>Audio Files</th>
@@ -265,7 +265,7 @@ class App extends Component {
               </td>
             </tr>
             <tr>
-              <td colspan="2">Supported Formats - (m4a, mp4a, mpga, mp2, mp2a, mp3, m2a, m3a, wav, weba, aac, oga, spx)</td>
+              <td colSpan="2">Supported Formats - (m4a, mp4a, mpga, mp2, mp2a, mp3, m2a, m3a, wav, weba, aac, oga, spx)</td>
             </tr>
           </tbody></table>
 

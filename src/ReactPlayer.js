@@ -6,7 +6,6 @@ import players from './players'
 import Player from './Player'
 import Preview from './Preview'
 import { FilePlayer } from './players/FilePlayer'
-import renderPreloadPlayers from './preload'
 
 const SUPPORTED_PROPS = Object.keys(propTypes)
 
@@ -124,8 +123,7 @@ export default class ReactPlayer extends Component {
     const otherProps = omit(this.props, SUPPORTED_PROPS, DEPRECATED_CONFIG_PROPS)
     const activePlayer = this.getActivePlayer(url)
     const renderedActivePlayer = this.renderActivePlayer(url, activePlayer)
-    const preloadPlayers = renderPreloadPlayers(url, this.config)
-    const players = [ renderedActivePlayer, ...preloadPlayers ].sort(this.sortPlayers)
+    const players = [ renderedActivePlayer ].sort(this.sortPlayers)
     if (showPreview && url) {
       return (
         <Preview
@@ -143,13 +141,4 @@ export default class ReactPlayer extends Component {
   }
 }
 
-export { default as YouTube } from './players/YouTube'
-export { default as SoundCloud } from './players/SoundCloud'
-export { default as Vimeo } from './players/Vimeo'
-export { default as Facebook } from './players/Facebook'
-export { default as Streamable } from './players/Streamable'
-export { default as Wistia } from './players/Wistia'
-export { default as Twitch } from './players/Twitch'
-export { default as DailyMotion } from './players/DailyMotion'
-export { default as Mixcloud } from './players/Mixcloud'
 export { default as FilePlayer } from './players/FilePlayer'
