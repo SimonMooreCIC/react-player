@@ -9,15 +9,7 @@ export const minifyPlugins = [
     'process.env': {
       NODE_ENV: JSON.stringify('production')
     }
-  }),
-  new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true,
-    comments: false,
-    mangle: {
-      except: [ 'ReactPlayer' ]
-    }
-  }),
-  new webpack.LoaderOptionsPlugin({ minimize: true })
+  })
 ]
 
 export default {
@@ -32,15 +24,15 @@ export default {
     ...plugins,
     ...minifyPlugins,
     new ExtractTextPlugin({ filename: 'app.css' })
-  ]
-  // optimization: {
-  //   minimizer: [
-  //     new UglifyJsPlugin({
-  //       sourceMap: true,
-  //       compress: {
-  //         warnings: false,
-  //       },
-  //     }),
-  //   ],
-  // }
+  ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          sourceMap: true,
+          compress: {},
+        }
+      }),
+    ],
+  }
 }
