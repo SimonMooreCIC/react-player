@@ -12,12 +12,6 @@ import { version } from '../../package.json'
 import ReactPlayer from '../ReactPlayer'
 import Duration from './Duration'
 
-const MULTIPLE_SOURCES = [
-  { src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4', type: 'video/mp4' },
-  { src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.ogv', type: 'video/ogv' },
-  { src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm', type: 'video/webm' }
-]
-
 class App extends Component {
   state = {
     url: null,
@@ -126,11 +120,11 @@ class App extends Component {
   ref = player => {
     this.player = player
   }
-  onChooseFile = e => {
-  	const url = URL.createObjectURL(e.target.files[0])
-    this.setState({ url })
-    console.log("Upload", url);
-  }
+  // onChooseFile = e => {
+  // 	const url = URL.createObjectURL(e.target.files[0])
+  //   this.setState({ url })
+  //   console.log("Upload", url);
+  // }
   onUseFile = () => {
     const blob = new Blob(["../videos/case.mp4"], {"type" : "video\/mp4"});
     const url = URL.createObjectURL(blob);
@@ -274,88 +268,30 @@ class App extends Component {
         <section className='section'>
           <table><tbody>
             <tr>
-              <th>YouTube</th>
+              <th>Video Files </th>
               <td>
-                {this.renderLoadButton('https://www.youtube.com/watch?v=oUFJJNQGwhk', 'Test A')}
-                {this.renderLoadButton('https://www.youtube.com/watch?v=jNgP6d9HraI', 'Test B')}
-                {this.renderLoadButton('https://www.youtube.com/playlist?list=PLDEcUiPhzbjI217qs5KgMvbvx6-fgY_Al', 'Playlist')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/video/case.mp4', 'mp4')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/video/big_buck_bunny_480p_h264.mov', 'mov')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/video/big_buck_bunny.ogv', 'ogv')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/video/big_buck_bunny.webm', 'webm')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/video/test.m4v', 'm4v')}
               </td>
             </tr>
             <tr>
-              <th>SoundCloud</th>
+              <td colspan="2">Supported Formats - (mp4, mov, ogv, webm, m4v)</td>
+            </tr>
+            <tr>
+              <th>Audio Files</th>
               <td>
-                {this.renderLoadButton('https://soundcloud.com/miami-nights-1984/accelerated', 'Test A')}
-                {this.renderLoadButton('https://soundcloud.com/tycho/tycho-awake', 'Test B')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.m4a', 'm4a')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.mpga', 'mpga')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/the-wires.mp3', 'mp3')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.wav', 'wav')}
+                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/audio/sample.aac', 'aac')}
               </td>
             </tr>
             <tr>
-              <th>Facebook</th>
-              <td>
-                {this.renderLoadButton('https://www.facebook.com/facebook/videos/10153231379946729/', 'Test A')}
-                {this.renderLoadButton('https://www.facebook.com/FacebookDevelopers/videos/10152454700553553/', 'Test B')}
-              </td>
-            </tr>
-            <tr>
-              <th>Vimeo</th>
-              <td>
-                {this.renderLoadButton('https://vimeo.com/90509568', 'Test A')}
-                {this.renderLoadButton('https://vimeo.com/169599296', 'Test B')}
-              </td>
-            </tr>
-            <tr>
-              <th>Twitch</th>
-              <td>
-                {this.renderLoadButton('https://www.twitch.tv/videos/106400740', 'Test A')}
-                {this.renderLoadButton('https://www.twitch.tv/videos/12783852', 'Test B')}
-                {this.renderLoadButton('https://www.twitch.tv/kronovi', 'Test C')}
-              </td>
-            </tr>
-            <tr>
-              <th>Streamable</th>
-              <td>
-                {this.renderLoadButton('https://streamable.com/moo', 'Test A')}
-                {this.renderLoadButton('https://streamable.com/ifjh', 'Test B')}
-              </td>
-            </tr>
-            <tr>
-              <th>Wistia</th>
-              <td>
-                {this.renderLoadButton('https://home.wistia.com/medias/e4a27b971d', 'Test A')}
-                {this.renderLoadButton('https://home.wistia.com/medias/29b0fbf547', 'Test B')}
-              </td>
-            </tr>
-            <tr>
-              <th>DailyMotion</th>
-              <td>
-                {this.renderLoadButton('https://www.dailymotion.com/video/x5e9eog', 'Test A')}
-                {this.renderLoadButton('https://www.dailymotion.com/video/x61xx3z', 'Test B')}
-              </td>
-            </tr>
-            <tr>
-              <th>Mixcloud</th>
-              <td>
-                {this.renderLoadButton('https://www.mixcloud.com/mixcloud/meet-the-curators/', 'Test A')}
-                {this.renderLoadButton('https://www.mixcloud.com/mixcloud/mixcloud-curates-4-mary-anne-hobbs-in-conversation-with-dan-deacon/', 'Test B')}
-              </td>
-            </tr>
-            <tr>
-              <th>Files</th>
-              <td>
-                {this.renderLoadButton('http://localhost:8081/videos?filePath=/Users/simonmoore/Documents/Mercury/OCWA/case.mp4', 'mp4')}
-                {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.ogv', 'ogv')}
-                {this.renderLoadButton('http://clips.vorwaerts-gmbh.de/big_buck_bunny.webm', 'webm')}
-                {this.renderLoadButton('https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3', 'mp3')}
-                {this.renderLoadButton(MULTIPLE_SOURCES, 'Multiple')}
-                {this.renderLoadButton('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8', 'HLS (m3u8)')}
-                {this.renderLoadButton('http://dash.edgesuite.net/envivio/EnvivioDash3/manifest.mpd', 'DASH (mpd)')}
-              </td>
-            </tr>
-            <tr>
-              <th>Custom URL</th>
-              <td>
-                <input ref={input => { this.urlInput = input }} type='text' placeholder='Enter URL' />
-                <button type="text  " onClick={() => this.setState({ url: this.urlInput.value })}>Load</button>
-              </td>
+              <td colspan="2">Supported Formats - (m4a, mp4a, mpga, mp2, mp2a, mp3, m2a, m3a, wav, weba, aac, oga, spx)</td>
             </tr>
           </tbody></table>
 
@@ -399,19 +335,7 @@ class App extends Component {
           </tbody></table>
         </section>
         <div>
-        <input onChange={this.onChooseFile} type='file' />
-        <button onClick={this.onUseFile}>Test</button>
-        <ReactPlayer
-          url={this.state.url}
-          className='react-player'
-          playing
-          controls
-          width='320px'
-          height='180px'
-          onPlay={this.onPlay}
-          onReady={() => console.log('onReady')}
-          onStart={() => console.log('onStart')}
-        />
+        {/* <input onChange={this.onChooseFile} type='file' /> */}
       </div>
         <footer className='footer'>
           Version <strong>{version}</strong>
